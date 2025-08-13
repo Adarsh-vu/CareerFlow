@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "869754503422",
+    "project_id": "careerflow-2a67c",
+    "storage_bucket": "careerflow-2a67c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869754503422:android:0e6d4058444b87bc16a5af",
+        "android_client_info": {
+          "package_name": "com.arshcreations.careerflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869754503422-96tvdthl6pkt9qlhusicdpohetsarbjo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arshcreations.careerflow",
+            "certificate_hash": "a910e9902b95cd2b6d6920e833887b04fd2ad539"
+          }
+        },
+        {
+          "client_id": "869754503422-7k5i0dal8i4lgd6d8kp3orom2cf7hl47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP6Kjbpra9L4QIfpWSEv0PWVNh0VJz51g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869754503422-7k5i0dal8i4lgd6d8kp3orom2cf7hl47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
