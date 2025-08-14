@@ -5,13 +5,11 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
-    <!-- Splash -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.arshcreations.careerflow.ui.splash.SplashFragment"
         tools:layout="@layout/fragment_splash" />
 
-    <!-- Auth flow -->
     <navigation
         android:id="@+id/auth_graph"
         app:startDestination="@id/signInFragment">
@@ -42,8 +40,8 @@
         </fragment>
     </navigation>
 
-    <!-- Main app graph -->
     <include
         android:id="@+id/main_graph"
         app:graph="@navigation/main_nav" />
+
 </navigation>

@@ -4,63 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
-    android:fillViewport="true">
+    android:background="?attr/colorSurface"
+    android:fillViewport="true"
+    tools:context=".ui.auth.SignInFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="32dp"
-        tools:context=".ui.auth.SignInFragment">
+        android:padding="32dp">
 
         <!-- Logo -->
-
-        <!-- Tagline -->
-
         <ImageView
             android:id="@+id/logo"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="72dp"
-            android:contentDescription="App Logo"
-            android:scaleType="centerCrop"
+            android:layout_marginTop="48dp"
+            android:contentDescription="@string/app_logo_description"
             android:src="@drawable/splash_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Welcome Back! -->
+        <!-- Welcome Back! Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/sign_in_welcome"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo" />
 
+        <!-- Tagline -->
         <TextView
             android:id="@+id/tagline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Your potential is limitless—let’s find it together"
-            android:textAlignment="center"
-            android:textColor="#1C1F47"
+            android:text="@string/sign_in_tagline"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo" />
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <!-- Email -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Welcome Back!"
-            android:textColor="#4E45E3"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tagline" />
-
+        <!-- Email Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -73,18 +66,18 @@
             app:boxCornerRadiusTopStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/tagline"
             app:startIconDrawable="@drawable/ic_mail">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password -->
+        <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -101,11 +94,11 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Sign In button -->
+        <!-- Sign In Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sign_in_button"
             android:layout_width="0dp"
@@ -114,47 +107,12 @@
             android:background="@drawable/gradient_primary_button"
             android:backgroundTint="@null"
             android:paddingVertical="16dp"
-            android:text="Sign In"
+            android:text="@string/button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_layout" />
 
-        <!-- Sign in with Google -->
-
-        <!-- ProgressBar -->
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sign_in_with_google_button"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="347dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
-            android:paddingVertical="16dp"
-            android:text="Sign In with Google"
-            android:textColor="#3F51B5"
-            app:backgroundTint="#F4F2F2"
-            app:cornerRadius="25dp"
-            app:icon="@drawable/ic_google_logo"
-            app:iconGravity="textStart"
-            app:iconPadding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_account_text"
-            app:strokeColor="@color/text_medium" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/sign_in_with_google_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sign_in_with_google_button" />
-
-        <!-- Create Account -->
+        <!-- "New to CareerFlow? Create Account" Section -->
         <LinearLayout
             android:id="@+id/create_account_layout"
             android:layout_width="wrap_content"
@@ -163,49 +121,58 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sign_in_with_google_button">
+            app:layout_constraintTop_toBottomOf="@id/sign_in_button">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_new_user"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/create_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/button_create_account"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-        <!-- Vertical chain for centering -->
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/topGuideline"
-            android:layout_width="wrap_content"
+        <!-- Sign in with Google Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_in_with_google_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            android:layout_marginTop="16dp"
+            android:paddingVertical="16dp"
+            android:text="@string/button_sign_in_google"
+            android:textColor="?attr/colorOnSurface"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_google_logo"
+            app:iconGravity="textStart"
+            app:iconPadding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_account_layout"
+            app:strokeColor="?attr/colorOnSurface"
+            app:strokeWidth="1dp" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottomGuideline"
+        <!-- ProgressBar for loading states -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.98" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="30dp"
-            android:text="New to CareerFlow? "
-            android:textColor="@color/secondary_dark"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-            tools:layout_editor_absoluteX="-1dp" />
-
-        <TextView
-            android:id="@+id/create_account_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="18dp"
-            android:text="Create Account"
-            android:textColor="@color/primary_indigo"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

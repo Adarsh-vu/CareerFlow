@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.arshcreations.careerflow"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.arshcreations.careerflow"
-        minSdk = 36
-        targetSdk = 36
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -37,31 +37,17 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
-
-    // Lifecycle
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    // Splash Screen API
     implementation(libs.androidx.core.splashscreen)
-
-    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-
-    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
-
-    // Play Services
     implementation(libs.play.services.auth)
-    implementation(libs.play.services.identity)
 
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

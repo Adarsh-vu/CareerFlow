@@ -48,6 +48,7 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    // This function is perfect and will be called by the fragment
     fun signInWithGoogle(idToken: String) {
         viewModelScope.launch {
             _authResult.value = AuthResult.LOADING
