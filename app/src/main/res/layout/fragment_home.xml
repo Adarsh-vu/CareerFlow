@@ -22,7 +22,7 @@
             android:textStyle="bold"
             android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="24dp"
-            tools:text="Welcome, Adarsh!" />
+            tools:text="Welcome, Adarsh !" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

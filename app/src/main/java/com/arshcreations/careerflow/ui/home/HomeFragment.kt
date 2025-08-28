@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.arshcreations.careerflow.R
 import com.arshcreations.careerflow.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -13,7 +14,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    // Get a reference to our new ViewModel
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -27,10 +27,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observe the userName LiveData from the ViewModel
+        // Observe user's name and update welcome text
         viewModel.userName.observe(viewLifecycleOwner) { name ->
-            // Update the TextView with the user's name
-            binding.welcomeText.text = "Welcome, $name!"
+            binding.welcomeText.text = getString(R.string.dash_welcome, name)
         }
     }
 

@@ -57,12 +57,17 @@ class SignUpFragment : Fragment() {
             when (result) {
                 AuthResult.SUCCESS -> {
                     Toast.makeText(requireContext(), "Account created successfully!", Toast.LENGTH_SHORT).show()
+
+                    // Navigate to the main part of the app
                     findNavController().navigate(R.id.action_signUpFragment_to_main_graph)
+                    viewModel.resetAuthResult()
                 }
                 AuthResult.FAILURE -> {
                     Toast.makeText(requireContext(), "Sign up failed. The email might already be in use.", Toast.LENGTH_LONG).show()
                 }
-                else -> {}
+                else -> {
+
+                }
             }
         }
     }

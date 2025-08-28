@@ -7,7 +7,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel : ViewModel() {
 
-    // This will hold the user's name
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 

@@ -2,6 +2,7 @@
     <string name="app_name">CareerFlow</string>
     <string name="app_name_career">Career</string>
     <string name="app_name_flow">Flow</string>
+    <string name="dash_welcome">Welcome, %1$s!</string>
     <string name="sign_in_welcome">Welcome Back!</string>
     <string name="sign_in_tagline">Your potential is limitless—let\'s find it together.</string>
     <string name="hint_email">Email</string>
@@ -11,5 +12,8 @@
     <string name="button_create_account">Create Account</string>
     <string name="button_sign_in_google">Sign In with Google</string>
     <string name="app_logo_description">CareerFlow App Logo</string>
+    <string name="sign_up_title">Create Account</string>
+    <string name="sign_up_subtitle">Join CareerFlow and start your journey</string>
+    <string name="hint_full_name">Full Name</string>
 
 </resources>

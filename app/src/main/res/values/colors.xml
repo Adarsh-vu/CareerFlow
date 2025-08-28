@@ -6,7 +6,7 @@
     <color name="background_light">#F8FAFC</color>
     <color name="surface_light">#FFFFFFFF</color>
     <color name="text_dark">#1E293B</color>
-    <color name="text_medium">#64748B</color>
+    <color name="text_secondary">#64748B</color>
 
     <color name="primary_dark">#818CF8</color>
     <color name="primary_variant_dark">#6366F1</color>
@@ -15,8 +15,6 @@
     <color name="surface_dark">#1E293B</color>
     <color name="text_light">#E2E8F0</color>
     <color name="text_medium_dark">#94A3B8</color>
-
-    <!-- Added missing colors -->
     <color name="primary_indigo">#4F46E5</color>
     <color name="primary_purple">#7C3AED</color>
     <color name="white">#FFFFFFFF</color>
