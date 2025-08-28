@@ -15,5 +15,27 @@
     <string name="sign_up_title">Create Account</string>
     <string name="sign_up_subtitle">Join CareerFlow and start your journey</string>
     <string name="hint_full_name">Full Name</string>
+    <string name="home_welcome_to">Welcome to</string>
+    <string name="home_tagline">Your journey to the perfect career starts here</string>
+    <string name="home_stat_colleges_count">2,500+</string>
+    <string name="home_stat_colleges_label">Colleges Listed</string>
+    <string name="home_stat_stories_count">10,000+</string>
+    <string name="home_stat_stories_label">Success Stories</string>
+    <string name="home_stat_users_count">50,000+</string>
+    <string name="home_stat_users_label">Active Users</string>
+    <string name="home_explore_features">Explore Features</string>
+    <string name="home_card_college_finder_title">College Finder</string>
+    <string name="home_card_college_finder_desc">Discover colleges that match your academic profile and career goals</string>
+    <string name="home_card_aptitude_test_title">Aptitude Test</string>
+    <string name="home_card_aptitude_test_desc">Take our AI-powered assessment to find your ideal career path</string>
+    <string name="home_card_ai_guide_title">AI Career Guide</string>
+    <string name="home_card_ai_guide_desc">Get instant guidance from our intelligent career advisor</string>
+    <string name="content_description_stat_icon">Statistic icon</string>
+    <string name="content_description_tip_icon">Tip icon</string>
+    <string name="home_quick_tips_title">Quick Tips</string>
+    <string name="home_tip_1_title">Start with the Aptitude Test</string>
+    <string name="home_tip_1_desc">Understand your strengths and interests before exploring college options</string>
+    <string name="home_tip_2_title">Set Clear Goals</string>
+    <string name="home_tip_2_desc">Define your career objectives to make better educational choices</string>
 
 </resources>
