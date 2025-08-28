@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:fillViewport="true"
+    android:textAlignment="center"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
@@ -17,32 +18,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/app_name_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
+                android:fadingEdge="horizontal"
+                android:paddingStart="2dp"
+                android:paddingEnd="16dp"
                 android:text="@string/app_name"
+                android:textAlignment="gravity"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 android:textColor="?attr/colorPrimary"
+                android:textSize="30sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/welcome_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/lugrasimo"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:shadowColor="#5F1414"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="@color/secondary_light"
+                android:textSize="24sp"
                 tools:text="Welcome, Adarsh!" />
+
             <TextView
                 android:id="@+id/tagline_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/beau_rivage"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:text="@string/home_tagline"
+                android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                android:textColor="?attr/colorOnSurface" />
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,72 +70,84 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/content_description_stat_icon"
                     android:src="@drawable/ic_colleges"
                     app:tint="?attr/colorPrimary" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/home_stat_colleges_count"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_stat_colleges_label"
                     android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/content_description_stat_icon"
                     android:src="@drawable/ic_aptitude"
                     app:tint="?attr/colorPrimary" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/home_stat_stories_count"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_stat_stories_label"
                     android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/content_description_stat_icon"
                     android:src="@drawable/ic_profile"
                     app:tint="?attr/colorPrimary" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/home_stat_users_count"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,6 +162,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/home_explore_features"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/college_finder_card"
             android:layout_width="match_parent"
@@ -138,11 +171,13 @@
             app:cardBackgroundColor="@color/primary_light"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,6 +187,7 @@
                     android:textColor="@color/white"
                     app:drawableStartCompat="@drawable/ic_colleges"
                     app:drawableTint="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,6 +197,7 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/aptitude_test_card"
             android:layout_width="match_parent"
@@ -169,11 +206,13 @@
             app:cardBackgroundColor="@color/primary_variant_light"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,6 +222,7 @@
                     android:textColor="@color/white"
                     app:drawableStartCompat="@drawable/ic_aptitude"
                     app:drawableTint="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -192,6 +232,7 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/ai_guide_card"
             android:layout_width="match_parent"
@@ -200,11 +241,13 @@
             app:cardBackgroundColor="@color/secondary_light"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -214,6 +257,7 @@
                     android:textColor="@color/white"
                     app:drawableStartCompat="@drawable/ic_guide"
                     app:drawableTint="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -249,11 +293,11 @@
                     android:id="@+id/tip_1_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_lightbulb"
                     android:contentDescription="@string/content_description_tip_icon"
-                    app:tint="?attr/colorPrimary"
+                    android:src="@drawable/ic_lightbulb"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tip_1_title"
@@ -263,22 +307,22 @@
                     android:text="@string/home_tip_1_title"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                     android:textColor="?attr/colorOnSurface"
-                    app:layout_constraintStart_toEndOf="@id/tip_1_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/tip_1_icon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tip_1_icon"
-                    app:layout_constraintBottom_toBottomOf="@id/tip_1_icon"/>
+                    app:layout_constraintStart_toEndOf="@id/tip_1_icon"
+                    app:layout_constraintTop_toTopOf="@id/tip_1_icon" />
 
                 <TextView
                     android:id="@+id/tip_1_desc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:alpha="0.8"
                     android:text="@string/home_tip_1_desc"
                     android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.8"
-                    app:layout_constraintStart_toStartOf="@id/tip_1_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tip_1_title"/>
+                    app:layout_constraintStart_toStartOf="@id/tip_1_title"
+                    app:layout_constraintTop_toBottomOf="@id/tip_1_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -301,10 +345,10 @@
                     android:id="@+id/tip_2_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_target"
                     android:contentDescription="@string/content_description_tip_icon"
+                    android:src="@drawable/ic_target"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tip_2_title"
@@ -314,22 +358,22 @@
                     android:text="@string/home_tip_2_title"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                     android:textColor="?attr/colorOnSurface"
-                    app:layout_constraintStart_toEndOf="@id/tip_2_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/tip_2_icon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tip_2_icon"
-                    app:layout_constraintBottom_toBottomOf="@id/tip_2_icon"/>
+                    app:layout_constraintStart_toEndOf="@id/tip_2_icon"
+                    app:layout_constraintTop_toTopOf="@id/tip_2_icon" />
 
                 <TextView
                     android:id="@+id/tip_2_desc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:alpha="0.8"
                     android:text="@string/home_tip_2_desc"
                     android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.8"
-                    app:layout_constraintStart_toStartOf="@id/tip_2_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tip_2_title"/>
+                    app:layout_constraintStart_toStartOf="@id/tip_2_title"
+                    app:layout_constraintTop_toBottomOf="@id/tip_2_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
