@@ -2,7 +2,7 @@
     <string name="app_name">CareerFlow</string>
     <string name="app_name_career">Career</string>
     <string name="app_name_flow">Flow</string>
-    <string name="dash_welcome">Welcome, %1$s!</string>
+    <string name="dash_welcome">Welcome, %1$s</string>
     <string name="sign_in_welcome">Welcome Back!</string>
     <string name="sign_in_tagline">Your potential is limitless—let\'s find it together.</string>
     <string name="hint_email">Email</string>
@@ -16,7 +16,7 @@
     <string name="sign_up_subtitle">Join CareerFlow and start your journey</string>
     <string name="hint_full_name">Full Name</string>
     <string name="home_welcome_to">Welcome to</string>
-    <string name="home_tagline">Your journey to the perfect career starts here</string>
+    <string name="home_tagline">Navigate the future of your career with confidence, exploring endless opportunities tailored just for you</string>
     <string name="home_stat_colleges_count">2,500+</string>
     <string name="home_stat_colleges_label">Colleges Listed</string>
     <string name="home_stat_stories_count">10,000+</string>

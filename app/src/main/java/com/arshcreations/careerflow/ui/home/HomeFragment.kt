@@ -28,12 +28,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observe user's name and update the new welcome text
+        // Activate marquee for tagline
+        binding.taglineText.isSelected = true
+
+        // Observe user's name
         viewModel.userName.observe(viewLifecycleOwner) { name ->
             binding.welcomeText.text = getString(R.string.dash_welcome, name)
         }
 
-        // Set up click listeners for the cards
+        // Card click listeners
         binding.collegeFinderCard.setOnClickListener {
             Toast.makeText(requireContext(), "College Finder clicked!", Toast.LENGTH_SHORT).show()
         }
