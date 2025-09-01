@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!--
+        This file configures the Android Lint tool.
+        By setting the severity of "NewerVersionAvailable" to "ignore", we are telling
+        both the Gradle build and the Android Studio IDE's "Analyze Code" feature
+        to stop reporting warnings about newer dependency versions.
+        This allows us to stay on stable versions without seeing these warnings.
+    -->
+    <issue id="NewerVersionAvailable" severity="ignore" />
+</lint>
+

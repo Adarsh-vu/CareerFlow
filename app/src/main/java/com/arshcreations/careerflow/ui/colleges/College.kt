@@ -1,10 +1,11 @@
 package com.arshcreations.careerflow.ui.colleges
 
 data class College(
-    val avgPackage: String? = null,
+
+    val avgPackage: Double? = null,
     val city: String? = null,
     val description: String? = null,
-    val fees: Long? = null,
+    val fees: Double? = null,
     val images: List<String>? = null,
     val name: String? = null,
     val nirfRanking: Long? = null,

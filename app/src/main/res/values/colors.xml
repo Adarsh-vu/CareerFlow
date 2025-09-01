@@ -20,4 +20,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="rating_star_color">#FFC107</color>
+    <color name="rating_background">#FEF3C7</color>
 </resources>

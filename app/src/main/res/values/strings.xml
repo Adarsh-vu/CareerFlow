@@ -38,6 +38,7 @@
     <string name="home_tip_2_title">Set Clear Goals</string>
     <string name="home_tip_2_desc">Define your career objectives to make better educational choices</string>
     <string name="college_fees_format">Avg Fees: ₹%1$.1fL p.a.</string>
+    <string name="college_package_format">Avg Package: %1$.1f LPA</string>
     <string name="college_location_format">%1$s, %2$s</string>
     <string name="colleges_headline">Find your perfect educational match</string>
     <string name="view_details_button">View Details</string>
@@ -51,4 +52,18 @@
     <string name="aptitude_title">Aptitude Fragment</string>
     <string name="colleges_tagline">Find your perfect educational match</string>
     <string name="colleges_load_error">Failed to load colleges.</string>
+    <string name="college_image_description">Image of the college campus</string>
+    <string name="college_finder_title">College Finder</string>
+    <string name="search_colleges_hint">Search Colleges or Locations</string>
+    <string name="apply_filters">Apply Filters</string>
+    <string name="college_logo_desc">College logo</string>
+    <string name="college_location_desc">College location</string>
+    <string name="rating_desc">College rating</string>
+    <string name="established_label">Established</string>
+    <string name="type_label">Type</string>
+    <string name="students_label">Students</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="view_details">View Details</string>
+
+
 </resources>
