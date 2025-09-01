@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home_nav"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/collegesFragment"
+        android:icon="@drawable/ic_search_lens"
+        android:title="@string/nav_colleges" />
+    <item
+        android:id="@+id/aptitudeFragment"
+        android:icon="@drawable/ic_apt_test"
+        android:title="@string/nav_aptitude" />
+    <item
+        android:id="@+id/aiGuideFragment"
+        android:icon="@drawable/ic_ai"
+        android:title="@string/nav_ai_guide" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_usr_nav"
+        android:title="@string/nav_profile" />
+</menu>

@@ -1,24 +1,24 @@
 package com.arshcreations.careerflow.ui.auth
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arshcreations.careerflow.R
 import com.arshcreations.careerflow.databinding.FragmentSignInBinding
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment() {
 
@@ -26,35 +26,7 @@ class SignInFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by viewModels()
-
-    private val oneTapClient by lazy { Identity.getSignInClient(requireActivity()) }
-
-    private val oneTapSignInLauncher = registerForActivityResult(
-        ActivityResultContracts.StartIntentSenderForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            try {
-                val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
-                val idToken = credential.googleIdToken
-                if (idToken != null) {
-                    viewModel.signInWithGoogle(idToken)
-                } else {
-                    Log.w("OneTapSignIn", "Google ID token was null.")
-                    Toast.makeText(requireContext(), "Google Sign-In failed.", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: ApiException) {
-                when (e.statusCode) {
-                    CommonStatusCodes.CANCELED -> {
-                        Log.d("OneTapSignIn", "One-tap sign in canceled.")
-                    }
-                    else -> {
-                        Log.w("OneTapSignIn", "Google sign in failed", e)
-                        Toast.makeText(requireContext(), "Google Sign-In failed.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-    }
+    private val credentialManager by lazy { CredentialManager.create(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +51,7 @@ class SignInFragment : Fragment() {
         }
 
         binding.signInWithGoogleButton.setOnClickListener {
-            beginOneTapSignIn()
+            beginGoogleSignIn()
         }
 
         binding.createAccountText.setOnClickListener {
@@ -87,27 +59,32 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun beginOneTapSignIn() {
-        val signInRequest = BeginSignInRequest.Builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    .setServerClientId(getString(R.string.default_web_client_id))
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            .setAutoSelectEnabled(true)
+    private fun beginGoogleSignIn() {
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(getString(R.string.default_web_client_id))
             .build()
 
-        oneTapClient.beginSignIn(signInRequest)
-            .addOnSuccessListener { result ->
-                val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent).build()
-                oneTapSignInLauncher.launch(intentSenderRequest)
-            }
-            .addOnFailureListener { e ->
-                Log.e("OneTapSignIn", "Google One Tap sign-in failed", e)
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val result = credentialManager.getCredential(requireActivity(), request)
+                val credential = result.credential
+                if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                    viewModel.signInWithGoogle(googleIdTokenCredential.idToken)
+                } else {
+                    Log.w("CredentialManager", "Unexpected credential type or is not a Google ID token.")
+                    Toast.makeText(requireContext(), "Google Sign-In failed.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("CredentialManager", "Google sign in failed", e)
                 Toast.makeText(requireContext(), "Sign-in failed. Please try again.", Toast.LENGTH_SHORT).show()
             }
+        }
     }
 
     private fun observeViewModel() {
@@ -133,3 +110,4 @@ class SignInFragment : Fragment() {
         _binding = null
     }
 }
+

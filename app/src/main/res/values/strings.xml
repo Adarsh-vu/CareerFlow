@@ -37,5 +37,18 @@
     <string name="home_tip_1_desc">Understand your strengths and interests before exploring college options</string>
     <string name="home_tip_2_title">Set Clear Goals</string>
     <string name="home_tip_2_desc">Define your career objectives to make better educational choices</string>
-
+    <string name="college_fees_format">Avg Fees: ₹%1$.1fL p.a.</string>
+    <string name="college_location_format">%1$s, %2$s</string>
+    <string name="colleges_headline">Find your perfect educational match</string>
+    <string name="view_details_button">View Details</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_colleges">Colleges</string>
+    <string name="nav_aptitude">Aptitude</string>
+    <string name="nav_ai_guide">AI Guide</string>
+    <string name="nav_profile">Profile</string>
+    <string name="ai_guide_title">AI Guide Fragment</string>
+    <string name="profile_title">Profile Fragment</string>
+    <string name="aptitude_title">Aptitude Fragment</string>
+    <string name="colleges_tagline">Find your perfect educational match</string>
+    <string name="colleges_load_error">Failed to load colleges.</string>
 </resources>

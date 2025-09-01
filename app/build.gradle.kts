@@ -3,16 +3,17 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.kotlin.symbol.processing.ksp)
 }
 
 android {
     namespace = "com.arshcreations.careerflow"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.arshcreations.careerflow"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -20,6 +21,16 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
 
     compileOptions {
@@ -47,8 +58,15 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.play.services.auth)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.glide)
+    ksp(libs.glide.ksp)
+
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid.library)
 }
+

@@ -19,4 +19,5 @@
     <color name="primary_purple">#7C3AED</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="rating_star_color">#FFC107</color>
 </resources>

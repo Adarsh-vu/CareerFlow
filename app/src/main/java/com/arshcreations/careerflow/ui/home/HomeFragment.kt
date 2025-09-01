@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.arshcreations.careerflow.R
 import com.arshcreations.careerflow.databinding.FragmentHomeBinding
 
@@ -28,17 +29,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Activate marquee for tagline
         binding.taglineText.isSelected = true
 
-        // Observe user's name
         viewModel.userName.observe(viewLifecycleOwner) { name ->
             binding.welcomeText.text = getString(R.string.dash_welcome, name)
         }
 
         // Card click listeners
         binding.collegeFinderCard.setOnClickListener {
-            Toast.makeText(requireContext(), "College Finder clicked!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_homeFragment_to_collegesFragment)
         }
 
         binding.aptitudeTestCard.setOnClickListener {
