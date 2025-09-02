@@ -2,41 +2,51 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
+    android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.arshcreations.careerflow.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_collegesFragment"
-            app:destination="@id/collegesFragment" />
-    </fragment>
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/collegesFragment"
         android:name="com.arshcreations.careerflow.ui.colleges.CollegesFragment"
-        android:label="Colleges"
-        tools:layout="@layout/fragment_colleges" />
+        android:label="CollegesFragment"
+        tools:layout="@layout/fragment_colleges">
+        <action
+            android:id="@+id/action_collegesFragment_to_collegeDetailFragment"
+            app:destination="@id/collegeDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/aptitudeFragment"
         android:name="com.arshcreations.careerflow.ui.aptitude.AptitudeFragment"
-        android:label="Aptitude"
-        tools:layout="@layout/fragment_aptitude" />
+        android:label="AptitudeFragment"
+        tools:layout="@layout/fragment_aptitude"/>
 
     <fragment
         android:id="@+id/aiGuideFragment"
         android:name="com.arshcreations.careerflow.ui.aiguide.AiGuideFragment"
-        android:label="AI Guide"
-        tools:layout="@layout/fragment_ai_guide" />
+        android:label="AiGuideFragment"
+        tools:layout="@layout/fragment_ai_guide"/>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.arshcreations.careerflow.ui.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/collegeDetailFragment"
+        android:name="com.arshcreations.careerflow.ui.colleges.CollegeDetailFragment"
+        android:label="fragment_college_detail"
+        tools:layout="@layout/fragment_college_detail" >
+        <argument
+            android:name="college"
+            app:argType="com.arshcreations.careerflow.ui.colleges.College" />
+    </fragment>
 
 </navigation>

@@ -1,8 +1,10 @@
 package com.arshcreations.careerflow.ui.colleges
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.arshcreations.careerflow.databinding.ItemCollegeCompactBinding
 import com.bumptech.glide.Glide
@@ -11,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.util.Locale
 
 class CollegesAdapter(
-    private val colleges: List<College>,
+    private var colleges: List<College>,
     private val onCollegeClick: ((College) -> Unit)? = null
 ) : RecyclerView.Adapter<CollegesAdapter.CollegeViewHolder>() {
 
@@ -19,19 +21,14 @@ class CollegesAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            // Click on whole item
             binding.root.setOnClickListener {
                 val pos = adapterPosition
                 if (pos != RecyclerView.NO_POSITION) {
                     onCollegeClick?.invoke(colleges[pos])
                 }
             }
-            // Click on "View details"
             binding.viewDetailsButton.setOnClickListener {
-                val pos = adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    onCollegeClick?.invoke(colleges[pos])
-                }
+                binding.root.performClick()
             }
         }
     }
@@ -50,25 +47,19 @@ class CollegesAdapter(
         val context = holder.itemView.context
 
         with(holder.binding) {
-            // Name
             collegeName.text = college.name ?: "Unknown College"
-
-            // Location
             collegeLocation.text = formatLocation(college.city, college.state)
-
-            // Stream chip
             collegeStream.text = college.stream ?: "Not Specified"
-
-            // Fees & Avg package
             collegeFees.text = formatFees(college.fees)
             avgPackage.text = formatPackage(college.avgPackage)
-
-            // Rating chip from NIRF rank
             setupRating(college.nirfRanking, ratingChip)
-
-            // Faded background image
             loadBackgroundImage(context, college.images, collegeBackgroundImage)
         }
+    }
+
+    fun updateColleges(newColleges: List<College>) {
+        this.colleges = newColleges
+        notifyDataSetChanged()
     }
 
     private fun formatLocation(city: String?, state: String?): String {
@@ -82,17 +73,15 @@ class CollegesAdapter(
 
     private fun formatFees(fees: Double?): String {
         return when {
-            fees == null || fees <= 0 -> "Fees not available"
-            fees >= 100_000 -> String.format(Locale.US, "%.1fL per year", fees / 100_000)
-            else -> String.format(Locale.US, "%.0f Lakhs per year", fees)
+            fees == null || fees <= 0.0 -> "Fees: N/A"
+            else -> String.format(Locale.US, "%.1fL per year", fees / 100_000)
         }
     }
 
     private fun formatPackage(avgPackage: Double?): String {
         return when {
-            avgPackage == null || avgPackage <= 0 -> "Package N/A"
-            avgPackage >= 100_000 -> String.format(Locale.US, "Avg Pkg: %.1fL", avgPackage / 100_000)
-            else -> String.format(Locale.US, "Avg Pkg: %.0f LPA", avgPackage)
+            avgPackage == null || avgPackage <= 0 -> "Avg Pkg: N/A"
+            else -> String.format(Locale.US, "Avg Pkg: %.1f LPA", avgPackage / 100_000)
         }
     }
 
@@ -102,7 +91,6 @@ class CollegesAdapter(
     ) {
         when {
             nirfRanking != null && nirfRanking in 1..100 -> {
-                // Rank 1 -> 5.0 ; Rank 100 -> 1.0
                 val rating = 5.0 - ((nirfRanking - 1) * 4.0 / 99.0)
                 ratingChip.text = String.format(Locale.US, "%.1f", rating)
                 ratingChip.visibility = View.VISIBLE
@@ -116,11 +104,7 @@ class CollegesAdapter(
         }
     }
 
-    private fun loadBackgroundImage(
-        context: android.content.Context,
-        images: List<String>?,
-        imageView: android.widget.ImageView
-    ) {
+    private fun loadBackgroundImage(context: Context, images: List<String>?, imageView: ImageView) {
         val url = images?.firstOrNull()
         if (!url.isNullOrEmpty()) {
             Glide.with(context)

@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.arshcreations.careerflow.R
 import com.google.firebase.auth.FirebaseAuth
@@ -21,12 +20,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Find all the necessary views from the layout
         val careerTextView = view.findViewById<TextView>(R.id.career_text_view)
         val flowTextView = view.findViewById<TextView>(R.id.flow_text_view)
         val textContainer = view.findViewById<LinearLayout>(R.id.text_container)
 
-        // Pass all views to the animation function
         startTypingAnimation(textContainer, careerTextView, flowTextView)
     }
 
@@ -35,7 +32,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         val flowText = "Flow"
 
         flowTextView.post {
-            // Set up the gradient for the "Flow" TextView to match the logo
             val paint = flowTextView.paint
             val width = paint.measureText(flowText)
             val shader = LinearGradient(
@@ -49,13 +45,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             )
             flowTextView.paint.shader = shader
 
-            // Clear the text before starting the animation
             careerTextView.text = ""
             flowTextView.text = ""
 
-            // Launch the animation coroutine
             lifecycleScope.launch {
-                // A tiny delay to ensure a smooth start
                 delay(200)
 
                 container.animate()
@@ -64,22 +57,18 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                     .setDuration(500)
                     .start()
 
-                // Wait for the container to become visible before typing
                 delay(500)
 
-                // Type "Career" first in dark blue
                 for (i in 1..careerText.length) {
                     careerTextView.text = careerText.substring(0, i)
-                    delay(160) // Typing speed
+                    delay(160)
                 }
 
-                // Then type "Flow" with the gradient
                 for (i in 1..flowText.length) {
                     flowTextView.text = flowText.substring(0, i)
-                    delay(160) // Typing speed
+                    delay(160)
                 }
 
-                // A final pause after the animation is complete
                 delay(1200)
                 navigateToNextScreen()
             }
@@ -89,17 +78,15 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     private fun navigateToNextScreen() {
         if (!isAdded) return
 
-        val navController = findNavController()
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.nav_graph, true)
-            .build()
-
-        val destination = if (FirebaseAuth.getInstance().currentUser != null) {
-            R.id.main_graph
-        } else {
-            R.id.auth_graph
+        lifecycleScope.launch {
+            val destinationAction = if (FirebaseAuth.getInstance().currentUser != null) {
+                // User is logged in, go to the main app
+                R.id.action_splashFragment_to_main_graph
+            } else {
+                // User is not logged in, go to the login/signup flow
+                R.id.action_splashFragment_to_auth_graph
+            }
+            findNavController().navigate(destinationAction)
         }
-
-        navController.navigate(destination, null, navOptions)
     }
 }

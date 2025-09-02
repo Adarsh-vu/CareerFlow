@@ -64,6 +64,17 @@
     <string name="students_label">Students</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="view_details">View Details</string>
-
+    <string name="location_icon">Location icon</string>
+    <string name="fees_icon">Fees icon</string>
+    <string name="package_icon">Package icon</string>
+    <string name="filter_title">Filters</string>
+    <string name="filter_location_label">Location (City)</string>
+    <string name="filter_location_hint">e.g. Delhi</string>
+    <string name="filter_fees_label">Max Annual Fees</string>
+    <string name="filter_stream_label">Stream</string>
+    <string name="filter_option_any">Any</string>
+    <string name="filter_stream_engineering">Engineering</string>
+    <string name="filter_stream_management">Management</string>
+    <string name="filter_stream_medical">Medical</string>
 
 </resources>

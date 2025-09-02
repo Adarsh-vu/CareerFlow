@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="?android:attr/colorBackground"
     android:fillViewport="true"
     tools:context=".ui.home.HomeFragment">
 
@@ -40,7 +40,7 @@
                 android:fontFamily="@font/lugrasimo"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                android:textColor="@color/secondary_light"
+                android:textColor="?attr/colorSecondary"
                 android:textSize="24sp"
                 android:textStyle="bold|italic"
                 tools:text="Welcome, Adarsh!" />
@@ -58,11 +58,10 @@
                 android:text="@string/home_tagline"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                android:textColor="@color/text_medium_dark"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <!-- Stats Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,7 +139,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Explore Features Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -152,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/primary_light"
+            app:cardBackgroundColor="?attr/colorPrimary"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <LinearLayout
@@ -166,16 +164,16 @@
                     android:drawablePadding="8dp"
                     android:text="@string/home_card_college_finder_title"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnPrimary"
                     app:drawableStartCompat="@drawable/ic_colleges"
-                    app:drawableTint="@color/white" />
+                    app:drawableTint="?attr/colorOnPrimary" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:alpha="0.8"
                     android:text="@string/home_card_college_finder_desc"
-                    android:textColor="@color/white" />
+                    android:textColor="?attr/colorOnPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
@@ -183,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/primary_variant_light"
+            app:cardBackgroundColor="?attr/colorPrimaryVariant"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <LinearLayout
@@ -197,16 +195,16 @@
                     android:drawablePadding="8dp"
                     android:text="@string/home_card_aptitude_test_title"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnPrimary"
                     app:drawableStartCompat="@drawable/ic_aptitude"
-                    app:drawableTint="@color/white" />
+                    app:drawableTint="?attr/colorOnPrimary" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:alpha="0.8"
                     android:text="@string/home_card_aptitude_test_desc"
-                    android:textColor="@color/white" />
+                    android:textColor="?attr/colorOnPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
@@ -214,7 +212,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/secondary_light"
+            app:cardBackgroundColor="?attr/colorSecondary"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <LinearLayout
@@ -228,20 +226,19 @@
                     android:drawablePadding="8dp"
                     android:text="@string/home_card_ai_guide_title"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnSecondary"
                     app:drawableStartCompat="@drawable/ic_guide"
-                    app:drawableTint="@color/white" />
+                    app:drawableTint="?attr/colorOnSecondary" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:alpha="0.8"
                     android:text="@string/home_card_ai_guide_desc"
-                    android:textColor="@color/white" />
+                    android:textColor="?attr/colorOnSecondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Quick Tips Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

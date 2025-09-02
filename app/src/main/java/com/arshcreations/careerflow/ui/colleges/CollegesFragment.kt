@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.arshcreations.careerflow.databinding.FragmentCollegesBinding
 
 class CollegesFragment : Fragment() {
@@ -16,6 +18,9 @@ class CollegesFragment : Fragment() {
 
     private val viewModel: CollegesViewModel by viewModels()
     private var collegesAdapter: CollegesAdapter? = null
+    private var currentStreamFilter: String? = null
+    private var currentLocationFilter: String? = null
+    private var currentMaxFeesFilter: Float = -1f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,61 +32,73 @@ class CollegesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupRecyclerView()
         setupObservers()
         setupClickListeners()
+        setupFilterResultListener()
+    }
+
+    private fun setupRecyclerView() {
+        collegesAdapter = CollegesAdapter(emptyList()) { college ->
+            // This is the correct navigation logic
+            val action = CollegesFragmentDirections.actionCollegesFragmentToCollegeDetailFragment(college)
+            findNavController().navigate(action)
+        }
+        binding.collegesRecyclerView.adapter = collegesAdapter
     }
 
     private fun setupObservers() {
         viewModel.colleges.observe(viewLifecycleOwner) { collegeList ->
-            if (!collegeList.isNullOrEmpty()) {
-                collegesAdapter = CollegesAdapter(collegeList) { college ->
-                    // Handle college click - navigate to details
-                    // TODO: Implement navigation to college details
-                }
-                binding.collegesRecyclerView.adapter = collegesAdapter
+            val nonNullList = collegeList ?: emptyList()
+            collegesAdapter?.updateColleges(nonNullList)
+            updateResultsCount(nonNullList.size)
 
-                // Update results count
-                updateResultsCount(collegeList.size)
-
-                // Hide error state
+            val isLoading = viewModel.isLoading.value ?: false
+            if (!isLoading && viewModel.error.value == null && nonNullList.isEmpty()) {
+                binding.errorText.text = "No colleges found matching your criteria."
+                binding.errorText.isVisible = true
+            } else if (viewModel.error.value == null){
                 binding.errorText.isVisible = false
             }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
-
-            // Hide/show other views based on loading state
             binding.collegesRecyclerView.isVisible = !isLoading
             binding.resultsCount.isVisible = !isLoading
+            if(isLoading) binding.errorText.isVisible = false
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            binding.errorText.isVisible = errorMessage != null
-            binding.errorText.text = errorMessage
-
-            // Hide other views when showing error
-            binding.collegesRecyclerView.isVisible = errorMessage == null
-            binding.resultsCount.isVisible = errorMessage == null
+            val collegeList = viewModel.colleges.value
+            if (errorMessage != null && collegeList.isNullOrEmpty()) {
+                binding.errorText.text = errorMessage
+                binding.errorText.isVisible = true
+                binding.collegesRecyclerView.isVisible = false
+                binding.resultsCount.isVisible = false
+            }
         }
     }
 
     private fun setupClickListeners() {
-        // Filter button click
         binding.filterButton.setOnClickListener {
-            // TODO: Implement filter functionality
-            // You can show a bottom sheet or navigate to filter screen
+            FilterBottomSheetFragment().show(childFragmentManager, FilterBottomSheetFragment.TAG)
         }
 
-        // Search functionality
-        binding.searchEditText.setOnEditorActionListener { _, _, _ ->
-            val query = binding.searchEditText.text.toString().trim()
-            if (query.isNotEmpty()) {
-                // TODO: Implement search functionality
-                // viewModel.searchColleges(query)
-            }
-            true
+        binding.searchEditText.addTextChangedListener { text ->
+            val query = text.toString().trim()
+            viewModel.applyFilters(query, currentStreamFilter, currentLocationFilter, currentMaxFeesFilter)
+        }
+    }
+
+    private fun setupFilterResultListener() {
+        childFragmentManager.setFragmentResultListener("filter_request", viewLifecycleOwner) { _, bundle ->
+            currentStreamFilter = bundle.getString("selected_stream")
+            currentLocationFilter = bundle.getString("selected_location")
+            currentMaxFeesFilter = bundle.getFloat("max_fees", -1f)
+
+            val currentQuery = binding.searchEditText.text.toString().trim()
+            viewModel.applyFilters(currentQuery, currentStreamFilter, currentLocationFilter, currentMaxFeesFilter)
         }
     }
 
@@ -95,6 +112,7 @@ class CollegesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.collegesRecyclerView.adapter = null
         collegesAdapter = null
         _binding = null
     }

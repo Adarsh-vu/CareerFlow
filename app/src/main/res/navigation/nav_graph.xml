@@ -8,40 +8,51 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.arshcreations.careerflow.ui.splash.SplashFragment"
-        tools:layout="@layout/fragment_splash" />
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash" >
+
+        <action
+            android:id="@+id/action_splashFragment_to_auth_graph"
+            app:destination="@id/auth_graph"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_main_graph"
+            app:destination="@id/main_nav"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <navigation
         android:id="@+id/auth_graph"
         app:startDestination="@id/signInFragment">
-
         <fragment
             android:id="@+id/signInFragment"
             android:name="com.arshcreations.careerflow.ui.auth.SignInFragment"
+            android:label="SignInFragment"
             tools:layout="@layout/fragment_sign_in">
             <action
                 android:id="@+id/action_signInFragment_to_signUpFragment"
                 app:destination="@id/signUpFragment" />
             <action
                 android:id="@+id/action_signInFragment_to_main_graph"
-                app:destination="@id/main_graph"
+                app:destination="@id/main_nav"
                 app:popUpTo="@id/auth_graph"
                 app:popUpToInclusive="true" />
         </fragment>
-
         <fragment
             android:id="@+id/signUpFragment"
             android:name="com.arshcreations.careerflow.ui.auth.SignUpFragment"
+            android:label="SignUpFragment"
             tools:layout="@layout/fragment_sign_up">
             <action
                 android:id="@+id/action_signUpFragment_to_main_graph"
-                app:destination="@id/main_graph"
+                app:destination="@id/main_nav"
                 app:popUpTo="@id/auth_graph"
                 app:popUpToInclusive="true" />
         </fragment>
     </navigation>
 
-    <include
-        android:id="@+id/main_graph"
-        app:graph="@navigation/main_nav" />
+    <include app:graph="@navigation/main_nav" />
 
 </navigation>

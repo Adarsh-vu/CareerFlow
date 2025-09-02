@@ -16,6 +16,8 @@ class CollegesViewModel : ViewModel() {
     private val _colleges = MutableLiveData<List<College>>()
     val colleges: LiveData<List<College>> = _colleges
 
+    private var allColleges: List<College> = emptyList()
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -30,9 +32,8 @@ class CollegesViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val snapshot = db.collection("colleges").get().await()
-                val collegeList = snapshot.toObjects(College::class.java)
-                _colleges.value = collegeList
+                allColleges = db.collection("colleges").get().await().toObjects(College::class.java)
+                _colleges.value = allColleges
                 _error.value = null
             } catch (e: Exception) {
                 Log.e("CollegesViewModel", "Error fetching colleges", e)
@@ -41,5 +42,41 @@ class CollegesViewModel : ViewModel() {
                 _isLoading.value = false
             }
         }
+    }
+
+    fun applyFilters(query: String, stream: String?, location: String?, maxFees: Float) {
+        var filteredList = allColleges
+
+        // Filter by search query
+        if (query.isNotBlank()) {
+            filteredList = filteredList.filter { college ->
+                college.name?.contains(query, ignoreCase = true) == true
+            }
+        }
+
+        // Filter by stream
+        if (stream != null) {
+            filteredList = filteredList.filter { college ->
+                college.stream.equals(stream, ignoreCase = true)
+            }
+        }
+
+        // Filter by location (city)
+        if (location != null && location.isNotBlank()) {
+            filteredList = filteredList.filter { college ->
+                college.city?.contains(location, ignoreCase = true) == true
+            }
+        }
+
+        // Filter by max fees (budget)
+        if (maxFees != -1f) {
+            val maxFeesInRupees = maxFees * 100_000
+            filteredList = filteredList.filter { college ->
+                val currentFees = college.fees
+                currentFees != null && currentFees <= maxFeesInRupees
+            }
+        }
+
+        _colleges.value = filteredList
     }
 }

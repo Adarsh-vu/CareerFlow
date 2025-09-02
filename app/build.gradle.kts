@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.kotlin.symbol.processing.ksp)
+    id("kotlin-parcelize")
 }
 
 android {

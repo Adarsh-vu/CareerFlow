@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
 
         // Card click listeners
         binding.collegeFinderCard.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_collegesFragment)
+            findNavController().navigate(R.id.collegesFragment)
         }
 
         binding.aptitudeTestCard.setOnClickListener {
