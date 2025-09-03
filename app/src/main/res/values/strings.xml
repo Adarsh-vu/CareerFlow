@@ -76,5 +76,57 @@
     <string name="filter_stream_engineering">Engineering</string>
     <string name="filter_stream_management">Management</string>
     <string name="filter_stream_medical">Medical</string>
+    <string name="college_detail_title">College Details</string>
+    <string name="about_college">About</string>
+    <string name="admission_details">Admission Details</string>
+    <string name="nirf_ranking">NIRF Ranking</string>
+    <string name="closing_rank">Closing Rank</string>
+    <string name="exams">Exams</string>
+    <string name="admissions">Admissions</string>
 
+    <string-array name="indian_states">
+        <item>Any State</item>
+        <item>Andhra Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chhattisgarh</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Odisha</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+    </string-array>
+
+    <string-array name="entrance_exams">
+        <item>Any Exam</item>
+        <item>JEE Main</item>
+        <item>JEE Advanced</item>
+        <item>CAT</item>
+        <item>KEAM</item>
+        <item>BITSAT</item>
+        <item>VITEEE</item>
+        <item>MET</item>
+        <item>SRMJEEE</item>
+        <item>NEET</item>
+        <item>UCEED</item>
+        <item>NMAT</item>
+        <item>SNAP</item>
+        <item>XAT</item>
+        <item>CMAT</item>
+        <item>GATE</item>
+    </string-array>
+    
 </resources>

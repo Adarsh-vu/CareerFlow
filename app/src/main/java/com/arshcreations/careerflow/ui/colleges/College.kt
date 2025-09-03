@@ -34,8 +34,21 @@ data class College(
     var stream: String? = null,
 
     @get:PropertyName("type") @set:PropertyName("type")
-    var type: String? = null
-) : Parcelable {
+    var type: String? = null,
 
-    constructor() : this(null, null, null, null, null, null, null, null, null, null)
+    @get:PropertyName("requiredExams") @set:PropertyName("requiredExams")
+    var requiredExams: List<String>? = null,
+
+    @get:PropertyName("closingRank") @set:PropertyName("closingRank")
+    var closingRank: Long? = null,
+
+    @get:PropertyName("admissionStart") @set:PropertyName("admissionStart")
+    var admissionStart: String? = null,
+
+    @get:PropertyName("admissionEnd") @set:PropertyName("admissionEnd")
+    var admissionEnd: String? = null
+
+) : Parcelable {
+    // This empty constructor is required by Firestore for data mapping.
+    constructor() : this(null, null, null, null, null, null, null, null, null, null, null, null, null, null)
 }

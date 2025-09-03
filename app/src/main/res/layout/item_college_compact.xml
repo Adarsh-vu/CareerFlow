@@ -103,8 +103,9 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:contentDescription="@string/location_icon"
-                    android:src="@drawable/ic_location_on" />
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_location_on"
+                    app:tint="?attr/colorInfo" />
 
                 <TextView
                     android:id="@+id/college_location"
@@ -136,7 +137,7 @@
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:contentDescription="@string/fees_icon"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_currency_rupee"
                         app:tint="?attr/colorSuccess" />
 
@@ -161,7 +162,7 @@
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:contentDescription="@string/package_icon"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_placement"
                         app:tint="?attr/colorSuccess" />
 
@@ -175,7 +176,64 @@
                         android:textStyle="bold"
                         tools:text="Avg Pkg: 18L" />
                 </LinearLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_exam"
+                        app:tint="?attr/colorOnSurfaceVariant"/>
+
+                    <TextView
+                        android:id="@+id/college_exams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        tools:text="JEE Advanced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_date"
+                        app:tint="?attr/colorOnSurfaceVariant"/>
+
+                    <TextView
+                        android:id="@+id/admission_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        tools:text="Starts: Jun 15" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -198,7 +256,6 @@
                     android:textColor="?attr/colorOnPrimary"
                     app:cornerRadius="18dp" />
             </LinearLayout>
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

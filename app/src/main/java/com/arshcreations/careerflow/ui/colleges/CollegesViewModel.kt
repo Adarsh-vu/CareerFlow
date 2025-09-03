@@ -44,10 +44,18 @@ class CollegesViewModel : ViewModel() {
         }
     }
 
-    fun applyFilters(query: String, stream: String?, location: String?, maxFees: Float) {
+    // UPDATED to handle all new filters
+    fun applyFilters(
+        query: String,
+        stream: String?,
+        location: String?,
+        state: String?,
+        exam: String?,
+        maxFees: Float
+    ) {
         var filteredList = allColleges
 
-        // Filter by search query
+        // Filter by search query (college name)
         if (query.isNotBlank()) {
             filteredList = filteredList.filter { college ->
                 college.name?.contains(query, ignoreCase = true) == true
@@ -65,6 +73,20 @@ class CollegesViewModel : ViewModel() {
         if (location != null && location.isNotBlank()) {
             filteredList = filteredList.filter { college ->
                 college.city?.contains(location, ignoreCase = true) == true
+            }
+        }
+
+        // NEW: Filter by state
+        if (state != null) {
+            filteredList = filteredList.filter { college ->
+                college.state.equals(state, ignoreCase = true)
+            }
+        }
+
+        // NEW: Filter by entrance exam
+        if (exam != null) {
+            filteredList = filteredList.filter { college ->
+                college.requiredExams?.any { it.equals(exam, ignoreCase = true) } == true
             }
         }
 

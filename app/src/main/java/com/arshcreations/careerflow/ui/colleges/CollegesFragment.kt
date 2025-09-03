@@ -17,9 +17,13 @@ class CollegesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: CollegesViewModel by viewModels()
-    private var collegesAdapter: CollegesAdapter? = null
+    private lateinit var collegesAdapter: CollegesAdapter
+
+    // Variables to hold the current state of all filters
     private var currentStreamFilter: String? = null
     private var currentLocationFilter: String? = null
+    private var currentStateFilter: String? = null
+    private var currentExamFilter: String? = null
     private var currentMaxFeesFilter: Float = -1f
 
     override fun onCreateView(
@@ -39,8 +43,7 @@ class CollegesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        collegesAdapter = CollegesAdapter(emptyList()) { college ->
-            // This is the correct navigation logic
+        collegesAdapter = CollegesAdapter { college ->
             val action = CollegesFragmentDirections.actionCollegesFragmentToCollegeDetailFragment(college)
             findNavController().navigate(action)
         }
@@ -50,7 +53,7 @@ class CollegesFragment : Fragment() {
     private fun setupObservers() {
         viewModel.colleges.observe(viewLifecycleOwner) { collegeList ->
             val nonNullList = collegeList ?: emptyList()
-            collegesAdapter?.updateColleges(nonNullList)
+            collegesAdapter.submitList(nonNullList)
             updateResultsCount(nonNullList.size)
 
             val isLoading = viewModel.isLoading.value ?: false
@@ -87,7 +90,14 @@ class CollegesFragment : Fragment() {
 
         binding.searchEditText.addTextChangedListener { text ->
             val query = text.toString().trim()
-            viewModel.applyFilters(query, currentStreamFilter, currentLocationFilter, currentMaxFeesFilter)
+            viewModel.applyFilters(
+                query,
+                currentStreamFilter,
+                currentLocationFilter,
+                currentStateFilter,
+                currentExamFilter,
+                currentMaxFeesFilter
+            )
         }
     }
 
@@ -95,10 +105,19 @@ class CollegesFragment : Fragment() {
         childFragmentManager.setFragmentResultListener("filter_request", viewLifecycleOwner) { _, bundle ->
             currentStreamFilter = bundle.getString("selected_stream")
             currentLocationFilter = bundle.getString("selected_location")
+            currentStateFilter = bundle.getString("selected_state")
+            currentExamFilter = bundle.getString("selected_exam")
             currentMaxFeesFilter = bundle.getFloat("max_fees", -1f)
 
             val currentQuery = binding.searchEditText.text.toString().trim()
-            viewModel.applyFilters(currentQuery, currentStreamFilter, currentLocationFilter, currentMaxFeesFilter)
+            viewModel.applyFilters(
+                currentQuery,
+                currentStreamFilter,
+                currentLocationFilter,
+                currentStateFilter,
+                currentExamFilter,
+                currentMaxFeesFilter
+            )
         }
     }
 
@@ -113,7 +132,6 @@ class CollegesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.collegesRecyclerView.adapter = null
-        collegesAdapter = null
         _binding = null
     }
 }
