@@ -16,4 +16,6 @@
     <color name="black">#FF000000</color>
     <color name="rating_star_color">#F89D04</color>
     <color name="rating_background">#EFFFF000</color>
+    <color name="primary_indigo">#4F46E5</color>
+    <color name="primary_purple">#7C3AED</color>
 </resources>
