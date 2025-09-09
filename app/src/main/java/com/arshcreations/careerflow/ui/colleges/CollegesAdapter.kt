@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.arshcreations.careerflow.data.models.College
 import com.arshcreations.careerflow.databinding.ItemCollegeCompactBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class CollegesAdapter(
-    private val onCollegeClick: ((College) -> Unit)? = null
+    private val onCollegeClick: (College) -> Unit
 ) : ListAdapter<College, CollegesAdapter.CollegeViewHolder>(DiffCallback) {
 
     private val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
@@ -27,9 +28,9 @@ class CollegesAdapter(
 
         init {
             binding.root.setOnClickListener {
-                val pos = adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    onCollegeClick?.invoke(getItem(pos))
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onCollegeClick(getItem(position))
                 }
             }
             binding.viewDetailsButton.setOnClickListener {
@@ -40,20 +41,14 @@ class CollegesAdapter(
         fun bind(college: College) {
             val context = itemView.context
             with(binding) {
-                collegeName.text = college.name ?: "Unknown College"
+                collegeName.text = college.name
                 collegeLocation.text = formatLocation(college.city, college.state)
-                collegeStream.text = college.stream ?: "Not Specified"
+                collegeStream.text = college.stream
                 collegeFees.text = formatFees(college.fees)
                 avgPackage.text = formatPackage(college.avgPackage)
                 setupRating(college.nirfRanking, ratingChip)
                 loadBackgroundImage(context, college.images, collegeBackgroundImage)
-
-                if (college.requiredExams.isNullOrEmpty()) {
-                    collegeExams.text = "Exams: N/A"
-                } else {
-                    collegeExams.text = college.requiredExams?.joinToString(", ")
-                }
-
+                collegeExams.text = college.requiredExams.joinToString(", ").ifEmpty { "N/A" }
                 admissionDate.text = formatAdmissionDate(college.admissionStart)
             }
         }
@@ -69,14 +64,12 @@ class CollegesAdapter(
     }
 
     override fun onBindViewHolder(holder: CollegeViewHolder, position: Int) {
-        val college = getItem(position)
-        holder.bind(college)
+        holder.bind(getItem(position))
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<College>() {
         override fun areItemsTheSame(oldItem: College, newItem: College): Boolean {
-            // Using a unique ID is best, but name can work if it's unique.
-            return oldItem.name == newItem.name
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: College, newItem: College): Boolean {
@@ -93,49 +86,45 @@ class CollegesAdapter(
         }
     }
 
-    private fun formatFees(fees: Double?): String {
+    private fun formatFees(fees: Double): String {
         return when {
-            fees == null || fees <= 0.0 -> "Fees: N/A"
+            fees <= 0.0 -> "Fees: N/A"
             else -> String.format(Locale.US, "%.1fL per year", fees / 100_000)
         }
     }
 
-    private fun formatPackage(avgPackage: Double?): String {
+    private fun formatPackage(avgPackage: Double): String {
         return when {
-            avgPackage == null || avgPackage <= 0 -> "Avg Pkg: N/A"
+            avgPackage <= 0 -> "Avg Pkg: N/A"
             else -> String.format(Locale.US, "Avg Pkg: %.1f LPA", avgPackage / 100_000)
         }
     }
 
     private fun setupRating(
-        nirfRanking: Long?,
+        nirfRanking: Long,
         ratingChip: com.google.android.material.chip.Chip
     ) {
-        when {
-            nirfRanking != null && nirfRanking in 1..100 -> {
-                // Rank 1 -> 5.0 ; Rank 100 -> 1.0
-                val rating = 5.0 - ((nirfRanking - 1) * 4.0 / 99.0)
-                ratingChip.text = String.format(Locale.US, "%.1f", rating)
-                ratingChip.visibility = View.VISIBLE
-            }
-            nirfRanking != null && nirfRanking > 100 -> {
-                val rating = String.format(Locale.US, "%.1f", nirfRanking / 20.0)
-                ratingChip.text = rating
-                ratingChip.visibility = View.VISIBLE
-            }
-            else -> ratingChip.visibility = View.GONE
+        if (nirfRanking > 0) {
+            // This is a simple placeholder for rating logic.
+            // You can implement a more sophisticated conversion from NIRF rank to a 5-star rating.
+            val rating = 5.0 - (nirfRanking / 50.0).coerceAtMost(4.5)
+            ratingChip.text = String.format(Locale.US, "%.1f", rating)
+            ratingChip.visibility = View.VISIBLE
+        } else {
+            ratingChip.visibility = View.GONE
         }
     }
 
-    private fun loadBackgroundImage(context: Context, images: List<String>?, imageView: ImageView) {
-        val url = images?.firstOrNull()
+    private fun loadBackgroundImage(context: Context, images: List<String>, imageView: ImageView) {
+        val url = images.firstOrNull()
         if (!url.isNullOrEmpty()) {
             Glide.with(context)
                 .load(url)
-                .transform(CenterCrop(), RoundedCorners(12))
+                .transform(CenterCrop(), RoundedCorners(32)) // Increased corner radius for better look
                 .into(imageView)
         } else {
-            imageView.setImageResource(android.R.color.transparent)
+            // You might want to set a placeholder color or image here
+            imageView.setImageDrawable(null)
         }
     }
 
@@ -145,7 +134,7 @@ class CollegesAdapter(
         }
         return try {
             val date = inputFormat.parse(dateString)
-            "Starts: ${outputFormat.format(date)}"
+            "Starts: ${outputFormat.format(date!!)}"
         } catch (e: Exception) {
             "Starts: N/A"
         }

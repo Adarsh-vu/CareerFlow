@@ -48,7 +48,6 @@
     <string name="nav_ai_guide">AI Guide</string>
     <string name="nav_profile">Profile</string>
     <string name="ai_guide_title">AI Guide Fragment</string>
-    <string name="profile_title">Profile Fragment</string>
     <string name="aptitude_title">Aptitude Fragment</string>
     <string name="colleges_tagline">Find your perfect educational match</string>
     <string name="colleges_load_error">Failed to load colleges.</string>
@@ -128,5 +127,32 @@
         <item>CMAT</item>
         <item>GATE</item>
     </string-array>
-    
+
+    <string name="profile_title">Profile</string>
+    <string name="profile_tagline">Where Your Aspirations Meet the Right Campus</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_form_title">My Preferences</string>
+    <string name="profile_form_dob">Date of Birth</string>
+    <string name="profile_form_exam">Attempted Entrance Exam</string>
+    <string name="profile_form_marks">Marks Obtained</string>
+    <string name="profile_form_rank">Rank</string>
+    <string name="profile_form_location">Preferred Location (State)</string>
+    <string name="profile_form_stream">Preferred Stream</string>
+    <string name="profile_form_income">Annual Family Income (₹)</string>
+    <string name="profile_form_save_button">Save &amp; Update Profile</string>
+
+    <string name="profile_hint_select_date">Select date</string>
+    <string name="profile_hint_select_exam">Select exam type</string>
+    <string name="profile_hint_select_state">Select preferred state</string>
+    <string name="profile_hint_select_stream">Select your stream</string>
+    <string name="profile_hint_enter_income">Enter annual income in ₹</string>
+    <string name="edit_img">Edit image\n</string>
+
+    <string-array name="streams_array">
+        <item>Engineering</item>
+        <item>Management</item>
+        <item>Medical</item>
+        <item>Arts &amp; Science</item>
+    </string-array>
+
 </resources>

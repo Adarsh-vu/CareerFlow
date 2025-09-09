@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.arshcreations.careerflow.data.models.College
 import com.arshcreations.careerflow.databinding.FragmentCollegesBinding
 
 class CollegesFragment : Fragment() {
@@ -17,14 +22,8 @@ class CollegesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: CollegesViewModel by viewModels()
+    private val args: CollegesFragmentArgs by navArgs()
     private lateinit var collegesAdapter: CollegesAdapter
-
-    // Variables to hold the current state of all filters
-    private var currentStreamFilter: String? = null
-    private var currentLocationFilter: String? = null
-    private var currentStateFilter: String? = null
-    private var currentExamFilter: String? = null
-    private var currentMaxFeesFilter: Float = -1f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +35,38 @@ class CollegesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupRecyclerView()
-        setupObservers()
-        setupClickListeners()
-        setupFilterResultListener()
+        setupListeners()
+        observeViewModel()
+
+        if (args.isPersonalizedSearch) {
+            viewModel.fetchCollegesBasedOnProfile()
+        } else {
+            viewModel.loadInitialData()
+        }
+    }
+
+    private fun setupListeners() {
+        // CORRECTED ID: filter_button
+        binding.filterButton.setOnClickListener {
+            val filterSheet = FilterBottomSheetFragment.newInstance(viewModel.getCurrentFilters())
+            filterSheet.show(childFragmentManager, FilterBottomSheetFragment.TAG)
+        }
+
+        setFragmentResultListener("filter_request") { _, bundle ->
+            val newFilters = bundle.getParcelable<ActiveFilters>("new_filters")
+            if (newFilters != null) {
+                // CORRECTED ID: search_edit_text
+                binding.searchEditText.setText(newFilters.query)
+                viewModel.onFiltersApplied(newFilters)
+            }
+        }
+
+        // CORRECTED ID: search_edit_text
+        binding.searchEditText.addTextChangedListener { editable ->
+            viewModel.onQueryChanged(editable.toString())
+        }
     }
 
     private fun setupRecyclerView() {
@@ -47,91 +74,39 @@ class CollegesFragment : Fragment() {
             val action = CollegesFragmentDirections.actionCollegesFragmentToCollegeDetailFragment(college)
             findNavController().navigate(action)
         }
-        binding.collegesRecyclerView.adapter = collegesAdapter
+        // CORRECTED ID: colleges_recycler_view
+        binding.collegesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = collegesAdapter
+        }
     }
 
-    private fun setupObservers() {
-        viewModel.colleges.observe(viewLifecycleOwner) { collegeList ->
-            val nonNullList = collegeList ?: emptyList()
-            collegesAdapter.submitList(nonNullList)
-            updateResultsCount(nonNullList.size)
+    private fun observeViewModel() {
+        viewModel.colleges.observe(viewLifecycleOwner) { colleges ->
+            collegesAdapter.submitList(colleges)
 
-            val isLoading = viewModel.isLoading.value ?: false
-            if (!isLoading && viewModel.error.value == null && nonNullList.isEmpty()) {
-                binding.errorText.text = "No colleges found matching your criteria."
-                binding.errorText.isVisible = true
-            } else if (viewModel.error.value == null){
+            binding.resultsCount.text = "${colleges.size} colleges found"
+
+            binding.errorText.isVisible = colleges.isEmpty() && viewModel.isLoading.value == false
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+
+            binding.progressBar.isVisible = isLoading
+            if (isLoading) {
                 binding.errorText.isVisible = false
             }
         }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.isVisible = isLoading
-            binding.collegesRecyclerView.isVisible = !isLoading
-            binding.resultsCount.isVisible = !isLoading
-            if(isLoading) binding.errorText.isVisible = false
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            val collegeList = viewModel.colleges.value
-            if (errorMessage != null && collegeList.isNullOrEmpty()) {
-                binding.errorText.text = errorMessage
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                binding.errorText.text = it
                 binding.errorText.isVisible = true
-                binding.collegesRecyclerView.isVisible = false
-                binding.resultsCount.isVisible = false
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
             }
-        }
-    }
-
-    private fun setupClickListeners() {
-        binding.filterButton.setOnClickListener {
-            FilterBottomSheetFragment().show(childFragmentManager, FilterBottomSheetFragment.TAG)
-        }
-
-        binding.searchEditText.addTextChangedListener { text ->
-            val query = text.toString().trim()
-            viewModel.applyFilters(
-                query,
-                currentStreamFilter,
-                currentLocationFilter,
-                currentStateFilter,
-                currentExamFilter,
-                currentMaxFeesFilter
-            )
-        }
-    }
-
-    private fun setupFilterResultListener() {
-        childFragmentManager.setFragmentResultListener("filter_request", viewLifecycleOwner) { _, bundle ->
-            currentStreamFilter = bundle.getString("selected_stream")
-            currentLocationFilter = bundle.getString("selected_location")
-            currentStateFilter = bundle.getString("selected_state")
-            currentExamFilter = bundle.getString("selected_exam")
-            currentMaxFeesFilter = bundle.getFloat("max_fees", -1f)
-
-            val currentQuery = binding.searchEditText.text.toString().trim()
-            viewModel.applyFilters(
-                currentQuery,
-                currentStreamFilter,
-                currentLocationFilter,
-                currentStateFilter,
-                currentExamFilter,
-                currentMaxFeesFilter
-            )
-        }
-    }
-
-    private fun updateResultsCount(count: Int) {
-        binding.resultsCount.text = if (count == 1) {
-            "$count college found"
-        } else {
-            "$count colleges found"
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.collegesRecyclerView.adapter = null
         _binding = null
     }
 }

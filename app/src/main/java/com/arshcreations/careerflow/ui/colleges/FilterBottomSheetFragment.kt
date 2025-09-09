@@ -18,6 +18,10 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: BottomSheetFilterBinding? = null
     private val binding get() = _binding!!
 
+    private val activeFilters: ActiveFilters by lazy {
+        arguments?.getParcelable("active_filters") ?: ActiveFilters()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,21 +32,39 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupDropdowns()
         setupListeners()
+        restoreFilterState()
+    }
+
+    private fun restoreFilterState() {
+        // Restore stream selection from ChipGroup
+        val streamChipId = when (activeFilters.stream) {
+            getString(R.string.filter_stream_engineering) -> R.id.chip_engineering
+            getString(R.string.filter_stream_management) -> R.id.chip_management
+            getString(R.string.filter_stream_medical) -> R.id.chip_medical
+            else -> R.id.chip_any
+        }
+        binding.streamChipGroup.check(streamChipId)
+
+        binding.stateAutocomplete.setText(activeFilters.state ?: getString(R.string.filter_option_any), false)
+        binding.examAutocomplete.setText(activeFilters.exam ?: getString(R.string.filter_option_any), false)
+
+        if (activeFilters.maxFees != -1f) {
+            binding.feesSlider.value = activeFilters.maxFees
+        } else {
+            binding.feesSlider.value = binding.feesSlider.valueTo
+        }
     }
 
     private fun setupDropdowns() {
         val states = resources.getStringArray(R.array.indian_states)
         val stateAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, states)
         binding.stateAutocomplete.setAdapter(stateAdapter)
-        binding.stateAutocomplete.setText(states[0], false)
 
         val exams = resources.getStringArray(R.array.entrance_exams)
         val examAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, exams)
         binding.examAutocomplete.setAdapter(examAdapter)
-        binding.examAutocomplete.setText(exams[0], false)
     }
 
     private fun setupListeners() {
@@ -55,43 +77,22 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         binding.applyFiltersButton.setOnClickListener {
-            // Get Stream
             val selectedChipId = binding.streamChipGroup.checkedChipId
-            val selectedChip = binding.root.findViewById<Chip>(selectedChipId)
-            val selectedStream = if (selectedChip.text.toString().equals(getString(R.string.filter_option_any), ignoreCase = true)) {
-                null
-            } else {
-                selectedChip.text.toString()
-            }
+            val selectedChip = view?.findViewById<Chip>(selectedChipId)
+            val selectedStream = selectedChip?.text?.toString()?.takeIf { !it.equals(getString(R.string.filter_option_any), ignoreCase = true) }
 
-            // Get State
-            val selectedStateText = binding.stateAutocomplete.text.toString()
-            val selectedState = if (selectedStateText.equals(getString(R.string.filter_option_any), ignoreCase = true) || selectedStateText.isBlank()) {
-                null
-            } else {
-                selectedStateText
-            }
+            val selectedState = binding.stateAutocomplete.text.toString().takeIf { !it.equals(getString(R.string.filter_option_any), ignoreCase = true) }
+            val selectedExam = binding.examAutocomplete.text.toString().takeIf { !it.equals(getString(R.string.filter_option_any), ignoreCase = true) }
+            val maxFees = binding.feesSlider.value.takeIf { it < binding.feesSlider.valueTo } ?: -1f
 
-            // Get Exam
-            val selectedExamText = binding.examAutocomplete.text.toString()
-            val selectedExam = if (selectedExamText.equals(getString(R.string.filter_option_any), ignoreCase = true) || selectedExamText.isBlank()) {
-                null
-            } else {
-                selectedExamText
-            }
+            val newFilters = activeFilters.copy(
+                stream = selectedStream,
+                state = selectedState,
+                exam = selectedExam,
+                maxFees = maxFees
+            )
 
-            // Get Max Fees
-            val maxFeesValue = binding.feesSlider.value
-            val maxFees = if (maxFeesValue >= binding.feesSlider.valueTo) -1f else maxFeesValue
-
-            // Send all results back
-            setFragmentResult("filter_request", bundleOf(
-                "selected_stream" to selectedStream,
-                "selected_state" to selectedState,
-                "selected_exam" to selectedExam,
-                "max_fees" to maxFees
-            ))
-
+            setFragmentResult("filter_request", bundleOf("new_filters" to newFilters))
             dismiss()
         }
     }
@@ -103,5 +104,10 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "FilterBottomSheet"
+        fun newInstance(activeFilters: ActiveFilters): FilterBottomSheetFragment {
+            val fragment = FilterBottomSheetFragment()
+            fragment.arguments = bundleOf("active_filters" to activeFilters)
+            return fragment
+        }
     }
 }
