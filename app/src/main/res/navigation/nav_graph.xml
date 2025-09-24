@@ -53,6 +53,16 @@
         </fragment>
     </navigation>
 
+    <fragment
+        android:id="@+id/careerPlannerFragment"
+        android:name="com.arshcreations.careerflow.ui.planner.CareerPlannerFragment"
+        android:label="@string/planner_title"
+        tools:layout="@layout/fragment_career_planner" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_careerPlannerFragment"
+        app:destination="@id/careerPlannerFragment" />
+
     <include app:graph="@navigation/main_nav" />
 
 </navigation>

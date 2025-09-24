@@ -19,4 +19,6 @@
 
     <color name="rating_star_color">#130231</color>
     <color name="rating_background">#08C9E2</color>
+    <color name="planner_green">#4ADE80</color>
+    <color name="planner_green_light">#14532D</color>
 </resources>

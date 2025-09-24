@@ -155,4 +155,24 @@
         <item>Arts &amp; Science</item>
     </string-array>
 
+    <string name="planner_title">Career Planner</string>
+    <string name="planner_card_title">My Career Journey</string>
+    <string name="planner_progress">Progress</string>
+    <string name="planner_job_goal_label">Target Job Role</string>
+    <string name="planner_college_goal_label">Dream College</string>
+
+    <string name="task_cleared_entrance">Cleared entrance exam</string>
+    <string name="task_joined_college">Joined the above college</string>
+    <string name="task_sem1">Completed Sem 1 with 8+ CGPA</string>
+    <string name="task_sem2">Completed Sem 2 with 8+ CGPA</string>
+    <string name="task_sem3">Completed Sem 3 with 8+ CGPA</string>
+    <string name="task_sem4">Completed Sem 4 with 8+ CGPA</string>
+    <string name="task_sem5">Completed Sem 5 with 8+ CGPA</string>
+    <string name="task_sem6">Completed Sem 6 with 8+ CGPA</string>
+    <string name="task_sem7">Completed Sem 7 with 8+ CGPA</string>
+    <string name="task_sem8">Completed Sem 8 with 8+ CGPA</string>
+    <string name="task_course_cleared">Cleared the course</string>
+    <string name="planner_college_placeholder">Set your Dream College</string>
+    <string name="planner_job_placeholder">Set your Target Job Role</string>
+    <string name="percentage_format">%d%%</string>
 </resources>

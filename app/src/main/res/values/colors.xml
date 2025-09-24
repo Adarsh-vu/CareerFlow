@@ -18,4 +18,10 @@
     <color name="rating_background">#EFFFF000</color>
     <color name="primary_indigo">#4F46E5</color>
     <color name="primary_purple">#7C3AED</color>
+    <color name="planner_green">#16A34A</color>
+    <color name="planner_green_light">#DCFCE7</color>
+    <color name="blue_career_toolbar">#1E7EBA</color>
+    <color name="planner_hint_cyan">#E0F7FA</color>
+    <color name="planner_progress_aqua">#64FFDA</color>
+    <color name="planner_progress_track_aqua">#3364FFDA</color>
 </resources>

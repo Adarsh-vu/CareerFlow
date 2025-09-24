@@ -47,6 +47,11 @@ class HomeFragment : Fragment() {
         binding.aiGuideCard.setOnClickListener {
             Toast.makeText(requireContext(), "AI Guide clicked!", Toast.LENGTH_SHORT).show()
         }
+
+        // Updated Goal Card listener
+        binding.tip2Card.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_careerPlannerFragment)
+        }
     }
 
     override fun onDestroyView() {

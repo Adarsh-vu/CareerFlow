@@ -39,6 +39,7 @@
         <item name="marginHorizontal">16dp</item>
         <item name="shapeAppearance">?attr/shapeAppearanceCornerExtraLarge</item>
         <item name="android:color">?attr/colorPrimaryContainer</item>
+
     </style>
 
 </resources>
