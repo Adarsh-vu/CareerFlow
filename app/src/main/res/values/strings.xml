@@ -175,4 +175,15 @@
     <string name="planner_college_placeholder">Set your Dream College</string>
     <string name="planner_job_placeholder">Set your Target Job Role</string>
     <string name="percentage_format">%d%%</string>
+    <string name="action_next">Next</string>
+    <string name="aptitude_heading">Aptitude Test</string>
+    <string name="aptitude_tagline">Discover your true potential and ideal career path.</string>
+    <string name="action_submit">Submit</string>
+    <string name="aptitude_results_heading">Your AI Report</string>
+    <string name="aptitude_results_tagline">Here is your personalized career analysis.</string>
+    <string name="recommended_stream">Recommended Stream</string>
+    <string name="suggested_courses">Suggested Courses</string>
+    <string name="skills_to_develop">Skills to Develop</string>
+    <string name="action_done">Done</string>
+    <string name="analyzing_results">Analyzing your results...</string>
 </resources>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,14 +40,14 @@ class HomeFragment : Fragment() {
         }
 
         binding.aptitudeTestCard.setOnClickListener {
-            Toast.makeText(requireContext(), "Aptitude Test clicked!", Toast.LENGTH_SHORT).show()
+            // Navigate to the AptitudeFragment
+            findNavController().navigate(R.id.action_homeFragment_to_aptitudeFragment)
         }
 
         binding.aiGuideCard.setOnClickListener {
-            Toast.makeText(requireContext(), "AI Guide clicked!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.aiGuideFragment)
         }
 
-        // Updated Goal Card listener
         binding.tip2Card.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_careerPlannerFragment)
         }

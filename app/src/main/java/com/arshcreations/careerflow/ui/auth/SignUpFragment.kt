@@ -50,23 +50,24 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.authResult.observe(viewLifecycleOwner) { result ->
-            binding.progressBar.isVisible = result == AuthResult.LOADING
-            binding.createAccountButton.isEnabled = result != AuthResult.LOADING
+        // Updated to observe the new 'authState'
+        viewModel.authState.observe(viewLifecycleOwner) { state ->
+            binding.progressBar.isVisible = state is AuthState.Loading
+            binding.createAccountButton.isEnabled = state !is AuthState.Loading
 
-            when (result) {
-                AuthResult.SUCCESS -> {
+            when (state) {
+                is AuthState.Success -> {
                     Toast.makeText(requireContext(), "Account created successfully!", Toast.LENGTH_SHORT).show()
-
-                    // Navigate to the main part of the app
                     findNavController().navigate(R.id.action_signUpFragment_to_main_graph)
-                    viewModel.resetAuthResult()
+                    // Updated to call the new reset function
+                    viewModel.resetAuthState()
                 }
-                AuthResult.FAILURE -> {
-                    Toast.makeText(requireContext(), "Sign up failed. The email might already be in use.", Toast.LENGTH_LONG).show()
+                is AuthState.Failure -> {
+                    // Updated to show the detailed error message
+                    Toast.makeText(requireContext(), "Sign up failed: ${state.message}", Toast.LENGTH_LONG).show()
                 }
                 else -> {
-
+                    // For Loading or null state
                 }
             }
         }

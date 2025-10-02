@@ -24,4 +24,5 @@
     <color name="planner_hint_cyan">#E0F7FA</color>
     <color name="planner_progress_aqua">#64FFDA</color>
     <color name="planner_progress_track_aqua">#3364FFDA</color>
+    <color name="colorPrimary">#4F46E5</color>
 </resources>

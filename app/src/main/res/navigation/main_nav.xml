@@ -17,6 +17,9 @@
                 android:name="isPersonalizedSearch"
                 android:defaultValue="true" />
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_aptitudeFragment"
+            app:destination="@id/aptitudeFragment" />
     </fragment>
 
     <fragment
@@ -37,7 +40,21 @@
         android:id="@+id/aptitudeFragment"
         android:name="com.arshcreations.careerflow.ui.aptitude.AptitudeFragment"
         android:label="AptitudeFragment"
-        tools:layout="@layout/fragment_aptitude"/>
+        tools:layout="@layout/fragment_aptitude">
+        <action
+            android:id="@+id/action_aptitudeFragment_to_aptitudeResultsFragment"
+            app:destination="@id/aptitudeResultsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aptitudeResultsFragment"
+        android:name="com.arshcreations.careerflow.ui.aptitude.AptitudeResultsFragment"
+        android:label="fragment_aptitude_results"
+        tools:layout="@layout/fragment_aptitude_results">
+        <argument
+            android:name="analysisResult"
+            app:argType="com.arshcreations.careerflow.ui.aptitude.AnalysisResult" />
+    </fragment>
 
     <fragment
         android:id="@+id/aiGuideFragment"
@@ -55,14 +72,17 @@
             app:destination="@id/auth_graph"
             app:popUpTo="@id/main_nav"
             app:popUpToInclusive="true" />
-    </fragment> <fragment
-    android:id="@+id/collegeDetailFragment"
-    android:name="com.arshcreations.careerflow.ui.colleges.CollegeDetailFragment"
-    android:label="fragment_college_detail"
-    tools:layout="@layout/fragment_college_detail" >
-    <argument
-        android:name="college"
-        app:argType="com.arshcreations.careerflow.data.models.College" />
-</fragment>
+    </fragment>
+
+    <fragment
+        android:id="@+id/collegeDetailFragment"
+        android:name="com.arshcreations.careerflow.ui.colleges.CollegeDetailFragment"
+        android:label="fragment_college_detail"
+        tools:layout="@layout/fragment_college_detail" >
+        <argument
+            android:name="college"
+            app:argType="com.arshcreations.careerflow.data.models.College" />
+    </fragment>
 
 </navigation>
+

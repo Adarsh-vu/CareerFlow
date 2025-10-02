@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -77,32 +78,41 @@ class SignInFragment : Fragment() {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                     viewModel.signInWithGoogle(googleIdTokenCredential.idToken)
                 } else {
-                    Log.w("CredentialManager", "Unexpected credential type or is not a Google ID token.")
+                    Log.w("SignInFragment", "Unexpected credential type or is not a Google ID token.")
                     Toast.makeText(requireContext(), "Google Sign-In failed.", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                Log.e("CredentialManager", "Google sign in failed", e)
-                Toast.makeText(requireContext(), "Sign-in failed. Please try again.", Toast.LENGTH_SHORT).show()
+            } catch (e: GetCredentialException) {
+                // Important change: We now log the specific error
+                Log.e("SignInFragment", "GetCredentialException: ${e.message}", e)
+                Toast.makeText(requireContext(), "Sign-in failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun observeViewModel() {
-        viewModel.authResult.observe(viewLifecycleOwner) { result ->
-            binding.progressBar.isVisible = result == AuthResult.LOADING
-            binding.signInButton.isEnabled = result != AuthResult.LOADING
-            binding.signInWithGoogleButton.isEnabled = result != AuthResult.LOADING
+        // We now observe the new 'authState' LiveData
+        viewModel.authState.observe(viewLifecycleOwner) { state ->
+            binding.progressBar.isVisible = state is AuthState.Loading
+            binding.signInButton.isEnabled = state !is AuthState.Loading
+            binding.signInWithGoogleButton.isEnabled = state !is AuthState.Loading
 
-            when (result) {
-                AuthResult.SUCCESS -> {
+            when (state) {
+                is AuthState.Success -> {
                     findNavController().navigate(R.id.action_signInFragment_to_main_graph)
                 }
-                AuthResult.FAILURE -> {
-                    Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_LONG).show()
+                is AuthState.Failure -> {
+                    // Important change: We now show the detailed error message
+                    Toast.makeText(requireContext(), "Error: ${state.message}", Toast.LENGTH_LONG).show()
                 }
-                else -> {}
+                else -> {} // For Loading or null state
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Reset the state when the fragment is not visible to avoid showing old toasts
+        viewModel.resetAuthState()
     }
 
     override fun onDestroyView() {
@@ -110,4 +120,3 @@ class SignInFragment : Fragment() {
         _binding = null
     }
 }
-
