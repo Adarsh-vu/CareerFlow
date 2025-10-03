@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="com.arshcreations.careerflow.ui.splash.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
 
         <action
             android:id="@+id/action_splashFragment_to_auth_graph"
@@ -63,6 +63,12 @@
         android:id="@+id/action_homeFragment_to_careerPlannerFragment"
         app:destination="@id/careerPlannerFragment" />
 
+    <!-- Global action to CareerGuide -->
+    <action
+        android:id="@+id/action_global_to_careerGuideFragment"
+        app:destination="@id/careerGuideFragment" />
+
+    <!-- Include main navigation -->
     <include app:graph="@navigation/main_nav" />
 
 </navigation>

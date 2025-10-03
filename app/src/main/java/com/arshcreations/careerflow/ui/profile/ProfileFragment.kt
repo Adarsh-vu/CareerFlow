@@ -96,35 +96,53 @@ class ProfileFragment : Fragment() {
         binding.tvStreamSelect.setOnClickListener {
             showMultiSelectDialog("Select Streams", streams, binding.chipGroupStream)
         }
+
+        // Stability slider listener
+        binding.sliderStability.addOnChangeListener { _, value, _ ->
+            binding.tvStabilityValue.text = getString(R.string.profile_stability_value, value.toInt())
+        }
     }
 
     private fun loadUserProfile() {
         val currentUser = auth.currentUser
         if (currentUser == null) {
-            // User not logged in, handle appropriately
             logoutUser()
             return
         }
 
-        // Step 1: Immediately populate the header with guaranteed info from the auth object.
         populateHeader(currentUser)
 
-        // Step 2: Fetch the rest of the profile (preferences) from Firestore.
         firestore.collection("users").document(currentUser.uid).get()
             .addOnSuccessListener { document ->
+                // CRITICAL: Check if view still exists before accessing binding
+                if (_binding == null || !isAdded) {
+                    Log.w("ProfileFragment", "View destroyed, skipping data load")
+                    return@addOnSuccessListener
+                }
+
                 if (document != null && document.exists()) {
                     val user = document.toObject(User::class.java)
-                    // We only need to populate the preferences now, the header is already done.
                     user?.preferences?.let { populatePreferences(it) }
                 }
             }
             .addOnFailureListener { e ->
+                // CRITICAL: Check if view still exists before showing toast
+                if (_binding == null || !isAdded) {
+                    return@addOnFailureListener
+                }
+
                 Log.e("ProfileFragment", "Error loading preferences", e)
                 Toast.makeText(requireContext(), "Failed to load preferences.", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun populateHeader(firebaseUser: FirebaseUser) {
+        // CRITICAL: Check if view still exists
+        if (_binding == null) {
+            Log.w("ProfileFragment", "View destroyed, skipping header populate")
+            return
+        }
+
         binding.tvProfileName.text = firebaseUser.displayName ?: "No Name"
         binding.tvProfileEmail.text = firebaseUser.email ?: "No Email"
 
@@ -137,6 +155,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun populatePreferences(prefs: UserPreferences) {
+        // CRITICAL: Check if view still exists
+        if (_binding == null) {
+            Log.w("ProfileFragment", "View destroyed, skipping preferences populate")
+            return
+        }
+
         binding.tvStatScore.text = prefs.marks?.toString() ?: "N/A"
         binding.tvStatRank.text = prefs.rank?.toString() ?: "N/A"
         binding.etDob.setText(prefs.dob.ifEmpty { null })
@@ -146,6 +170,10 @@ class ProfileFragment : Fragment() {
         updateChipGroup(binding.chipGroupStream, prefs.streams)
 
         binding.etIncome.setText(prefs.annualIncome?.toString() ?: "")
+
+        // Set stability slider value
+        binding.sliderStability.value = prefs.stability.toFloat()
+        binding.tvStabilityValue.text = getString(R.string.profile_stability_value, prefs.stability)
     }
 
     private fun saveUserProfileData() {
@@ -161,13 +189,22 @@ class ProfileFragment : Fragment() {
             rank = if (rankText == "N/A") null else rankText.toIntOrNull(),
             locations = binding.chipGroupLocation.children.map { (it as Chip).text.toString() }.toList(),
             streams = binding.chipGroupStream.children.map { (it as Chip).text.toString() }.toList(),
-            annualIncome = binding.etIncome.text.toString().toLongOrNull()
+            annualIncome = binding.etIncome.text.toString().toLongOrNull(),
+            stability = binding.sliderStability.value.toInt()
         )
 
         val dataToSave = mapOf("preferences" to preferences)
         firestore.collection("users").document(userId).set(dataToSave, SetOptions.merge())
-            .addOnSuccessListener { Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { e -> Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show() }
+            .addOnSuccessListener {
+                if (_binding != null && isAdded) {
+                    Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                if (_binding != null && isAdded) {
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun uploadProfilePicture(uri: Uri) {
@@ -178,23 +215,25 @@ class ProfileFragment : Fragment() {
         storageRef.putFile(uri)
             .addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    // Also update the photoUrl in the main Firebase Auth user profile
                     val profileUpdates = com.google.firebase.auth.userProfileChangeRequest {
                         photoUri = downloadUrl
                     }
                     auth.currentUser?.updateProfile(profileUpdates)
 
-                    // And update the URL in Firestore
                     val updates = mapOf("photoUrl" to downloadUrl.toString())
                     firestore.collection("users").document(userId).update(updates)
                         .addOnSuccessListener {
-                            Toast.makeText(requireContext(), "Profile picture updated.", Toast.LENGTH_SHORT).show()
-                            Glide.with(this).load(downloadUrl).circleCrop().into(binding.ivProfilePicture)
+                            if (_binding != null && isAdded) {
+                                Toast.makeText(requireContext(), "Profile picture updated.", Toast.LENGTH_SHORT).show()
+                                Glide.with(this).load(downloadUrl).circleCrop().into(binding.ivProfilePicture)
+                            }
                         }
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                if (_binding != null && isAdded) {
+                    Toast.makeText(requireContext(), "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
     }
 

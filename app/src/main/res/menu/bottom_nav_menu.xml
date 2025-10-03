@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_apt_test"
         android:title="@string/nav_aptitude" />
     <item
-        android:id="@+id/aiGuideFragment"
+        android:id="@+id/careerGuideFragment"
         android:icon="@drawable/ic_ai"
         android:title="@string/nav_ai_guide" />
     <item

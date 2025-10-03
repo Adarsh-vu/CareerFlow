@@ -201,5 +201,28 @@
     </string-array>
 
         <string name="question_progress">Question %1$d / %2$d</string>
+    <string name="bot_avatar">Bot Avatar</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="thumbs_up">Thumbs Up</string>
+    <string name="thumbs_down">Thumbs Down</string>
+    <string name="copy">Copy</string>
+    <string name="regenerate">Regenerate</string>
+    <string name="career_guide_title">Mentra</string>
+    <string name="ai_model_version">✨ AI 2.5</string>
+    <string name="menu">Menu</string>
+    <string name="typing_indicator">Typing…</string>
+    <string name="chat_input_hint">Type your question…</string>
+    <string name="send_message">Send</string>
+    <string name="add_attachment">Add</string>
+
+    <!-- Career Stability Strings -->
+    <string name="profile_stability_title">Career Stability Preference</string>
+    <string name="profile_stability_subtitle">How important is job security to you?</string>
+    <string name="profile_stability_risk_taker">Risk-taker</string>
+    <string name="profile_stability_focused">Stability-focused</string>
+    <string name="profile_stability_value">%1$d/10</string>
+
+
+
 
 </resources>

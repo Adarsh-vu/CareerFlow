@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.aiGuideCard.setOnClickListener {
-            findNavController().navigate(R.id.aiGuideFragment)
+            findNavController().navigate(R.id.careerGuideFragment)
         }
 
         binding.tip2Card.setOnClickListener {

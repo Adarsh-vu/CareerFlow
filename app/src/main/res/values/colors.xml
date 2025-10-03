@@ -25,4 +25,13 @@
     <color name="planner_progress_aqua">#64FFDA</color>
     <color name="planner_progress_track_aqua">#3364FFDA</color>
     <color name="colorPrimary">#4F46E5</color>
+    <color name="bot_message_bg">#4A2882</color>
+    <color name="user_message_bg">#7C3AED</color>
+    <color name="action_button_tint">#B794F6</color>
+    <color name="quick_reply_chip_bg">#5B3A8C</color>
+    <color name="chat_input_bg">#4A2882</color>
+    <color name="chat_input_text">#FFFFFF</color>
+    <color name="chat_input_hint">#99FFFFFF</color>
+
+
 </resources>

@@ -32,7 +32,7 @@ class AptitudeFragment : Fragment() {
                 binding.tipText.text = tips[currentTipIndex]
                 binding.tipText.animate().alpha(1f).setDuration(300).start()
             }.start()
-            tipHandler.postDelayed(this, 10000)
+            tipHandler.postDelayed(this, 6000)
         }
     }
 

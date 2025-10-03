@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_homeFragment_to_aptitudeFragment"
             app:destination="@id/aptitudeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_careerGuideFragment"
+            app:destination="@id/careerGuideFragment" />
     </fragment>
 
     <fragment
@@ -56,11 +59,16 @@
             app:argType="com.arshcreations.careerflow.ui.aptitude.AnalysisResult" />
     </fragment>
 
+    <!-- CareerGuide Fragment - ONLY ONE! -->
     <fragment
-        android:id="@+id/aiGuideFragment"
-        android:name="com.arshcreations.careerflow.ui.aiguide.AiGuideFragment"
-        android:label="AiGuideFragment"
-        tools:layout="@layout/fragment_ai_guide"/>
+        android:id="@+id/careerGuideFragment"
+        android:name="com.arshcreations.careerflow.ui.careerguide.CareerGuideFragment"
+        android:label="Mentra"
+        tools:layout="@layout/fragment_career_guide">
+        <action
+            android:id="@+id/action_careerGuideFragment_to_collegeDetailFragment"
+            app:destination="@id/collegeDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -78,11 +86,10 @@
         android:id="@+id/collegeDetailFragment"
         android:name="com.arshcreations.careerflow.ui.colleges.CollegeDetailFragment"
         android:label="fragment_college_detail"
-        tools:layout="@layout/fragment_college_detail" >
+        tools:layout="@layout/fragment_college_detail">
         <argument
             android:name="college"
             app:argType="com.arshcreations.careerflow.data.models.College" />
     </fragment>
 
 </navigation>
-
