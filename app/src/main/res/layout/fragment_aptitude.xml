@@ -7,7 +7,6 @@
     android:background="?android:attr/colorBackground"
     tools:context=".ui.aptitude.AptitudeFragment">
 
-    <!-- Themed Header Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/header_card"
         android:layout_width="0dp"
@@ -17,54 +16,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient_primary_header"
-            android:orientation="vertical"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="22dp"
-            android:paddingBottom="24dp">
-
-            <TextView
-                android:id="@+id/heading_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/aptitude_heading"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tagline_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:alpha="0.9"
-                android:text="@string/aptitude_tagline"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:textColor="@color/white" />
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Group for all test-related views, to easily show/hide them -->
     <androidx.constraintlayout.widget.Group
         android:id="@+id/test_content_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="progress_text,progress_indicator,questions_view_pager,next_button"
-        tools:visibility="visible" />
+        app:constraint_referenced_ids="progress_text,progress_indicator,questions_view_pager,next_button" />
 
-    <!-- Test Content Area -->
     <TextView
         android:id="@+id/progress_text"
+        style="@style/TextAppearance.Material3.LabelLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_card"
         tools:text="Question 5/25" />
@@ -78,8 +45,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress_text"
-        tools:progress="20" />
+        app:layout_constraintTop_toBottomOf="@id/progress_text" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/questions_view_pager"
@@ -107,17 +73,102 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Loading and Error Views -->
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
+    <!-- Enhanced Loading Card with Full Background Image -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/loading_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_card"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Full Background Image -->
+            <ImageView
+                android:id="@+id/loading_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tips_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Gradient Overlay for better text readability -->
+            <View
+                android:id="@+id/gradient_overlay"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/gradient_overlay"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Content Container -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/loading_progress"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:indeterminateTint="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/loading_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    android:text="@string/generating_your_test"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/tip_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.3"
+                    android:minHeight="100dp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="3"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="@android:color/white"
+                    android:textStyle="normal|bold|italic"
+                    tools:text="This isn't just a test; it's a compass. Each answer helps point toward your unique strengths and future career path." />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/error_text"
@@ -133,10 +184,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_card"
-        tools:text="Failed to load questions.\nPlease check your connection." />
+        app:layout_constraintTop_toBottomOf="@id/header_card" />
 
-    <!-- Analyzing Overlay -->
     <androidx.constraintlayout.widget.Group
         android:id="@+id/analyzing_group"
         android:layout_width="wrap_content"
@@ -181,4 +230,3 @@
         app:layout_constraintTop_toBottomOf="@id/analyzing_progress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

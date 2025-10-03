@@ -186,4 +186,20 @@
     <string name="skills_to_develop">Skills to Develop</string>
     <string name="action_done">Done</string>
     <string name="analyzing_results">Analyzing your results...</string>
+    <string name="generating_your_test">Crafting your unique test...</string>
+    <string-array name="aptitude_solving_tips">
+        <item>This isn\'t just a test; it\'s a compass. Each answer helps point toward your unique strengths and future career path.</item>
+        <item>Pacing is key. If a question feels like a roadblock, make your best logical guess and move forward. Maintaining momentum is a powerful strategy.</item>
+        <item>Quickly eliminating 1–2 impossible options is a victory in itself. It dramatically increases your odds and focuses your thinking.</item>
+        <item>Visualize the puzzle. A quick sketch for a logical problem can instantly reveal the solution that words might hide.</item>
+        <item>Trust your analytical instincts. Often, your first logical deduction is the correct one. Don\'t overthink the simple steps.</item>
+        <item>Focus on the \'why\' behind each logical step. Understanding the process of solving is more valuable than just finding the answer.</item>
+
+        <item>Embrace a challenging question. It\'s an opportunity to stretch your analytical muscles and discover a new way of thinking.</item>
+        <item>Precision matters. Take a moment to fully understand the question before diving into the options. The key is often in the details.</item>
+        <item>This test measures how you think, not just what you know. Focus on the logical steps to find the answer, rather than trying to recall a specific formula.</item>
+    </string-array>
+
+        <string name="question_progress">Question %1$d / %2$d</string>
+
 </resources>
